@@ -1,0 +1,221 @@
+================================================================================
+                         WNIOSKI Z BADAN ALGORYTMOW SORTOWANIA
+================================================================================
+
+================================================================================
+CZESC I - Porownanie Insertion Sort, Selection Sort, Heapsort, Merge Sort
+================================================================================
+
+1. ZLOZONOSC OBLICZENIOWA I EFEKTYWNOSC SORTOWANIA
+---------------------------------------------------
+
+a) Insertion Sort (IS)
+   - Zlozonosc pesymistyczna: O(n^2)
+   - Zlozonosc optymistyczna: O(n)
+   - Zlozonosc srednia: O(n^2)
+   - Pamiec dodatkowa: O(1) - sortowanie w miejscu
+   - Algorytm stabilny
+
+   Insertion Sort jest najszybszy sposrod algorytmow O(n^2) dla tablic
+   czesciowo posortowanych. Dla tablicy rosnacej dziala w czasie liniowym O(n),
+   poniewaz petla while nie wykonuje zadnych przesuniec - kazdy element jest
+   juz na wlasciwym miejscu. Dla tablicy malejacej osiaga najgorszy przypadek
+   O(n^2), bo kazdy element musi byc przesuniety na poczatek tablicy.
+
+b) Selection Sort (SS)
+   - Zlozonosc pesymistyczna: O(n^2)
+   - Zlozonosc optymistyczna: O(n^2)
+   - Zlozonosc srednia: O(n^2)
+   - Pamiec dodatkowa: O(1) - sortowanie w miejscu
+   - Algorytm niestabilny
+
+   Selection Sort zawsze wykonuje tyle samo porownan niezaleznie od postaci
+   danych wejsciowych. Petla wewnetrzna zawsze przeszukuje caly nieposortowany
+   fragment tablicy w poszukiwaniu maksimum. Dlatego na wykresie wszystkie
+   5 linii (losowa, rosnaca, malejaca, stala, v-ksztaltna) nakladaja sie
+   na siebie - czas sortowania praktycznie nie zalezy od ukladu danych.
+
+c) Heapsort (HS)
+   - Zlozonosc pesymistyczna: O(n log n)
+   - Zlozonosc optymistyczna: O(n log n)
+   - Zlozonosc srednia: O(n log n)
+   - Pamiec dodatkowa: O(1) - sortowanie w miejscu
+   - Algorytm niestabilny
+
+   Heapsort gwarantuje czas O(n log n) niezaleznie od danych wejsciowych.
+   Jest znacznie szybszy od IS i SS dla duzych tablic. Budowanie kopca
+   zajmuje O(n), a nastepnie n-1 razy wykonywana jest operacja przywracania
+   wlasnosci kopca (heapify) o zlozonosci O(log n). Roznice miedzy postaciami
+   tablic sa niewielkie, ale widoczne - tablica stala jest najszybsza,
+   bo heapify konczy sie wczesniej gdy wszystkie elementy sa rowne.
+
+d) Merge Sort (MS)
+   - Zlozonosc pesymistyczna: O(n log n)
+   - Zlozonosc optymistyczna: O(n log n)
+   - Zlozonosc srednia: O(n log n)
+   - Pamiec dodatkowa: O(n) - wymaga tablicy pomocniczej B
+   - Algorytm stabilny
+
+   Merge Sort rowniez gwarantuje O(n log n) dla kazdego przypadku. Jest
+   stabilny, co stanowi przewage nad Heapsortem. Glowna wada to koniecznosc
+   uzycia dodatkowej pamieci O(n) na tablice pomocnicza B, co przy bardzo
+   duzych zbiorach danych moze byc problemem. Na wykresach czasy dla roznych
+   postaci tablic sa bardzo zblizione, co potwierdza stala zlozonosc
+   O(n log n).
+
+
+2. POROWNANIE PAMIECI
+---------------------
+
+   Algorytm        | Pamiec dodatkowa | Uwagi
+   -----------------+------------------+----------------------------------
+   Insertion Sort   | O(1)             | Tylko zmienna key i indeks i
+   Selection Sort   | O(1)             | Tylko zmienna max i indeks
+   Heapsort         | O(1)             | Operacje na kopcu w miejscu
+   Merge Sort       | O(n)             | Tablica pomocnicza B rozmiaru n
+
+   Pod wzgledem pamieci Merge Sort jest najgorszy - potrzebuje dodatkowej
+   tablicy o rozmiarze n. Pozostale trzy algorytmy sortuja w miejscu,
+   uzywajac jedynie stalej ilosci dodatkowej pamieci.
+
+
+3. WPLYW POSTACI CIAGOW WEJSCIOWYCH NA CZAS SORTOWANIA
+--------------------------------------------------------
+
+   a) Tablica losowa:
+      - IS: czas O(n^2), srednio polowa maksymalnych przesuniec
+      - SS: czas O(n^2), bez zmian wzgledem innych postaci
+      - HS: czas O(n log n), typowy przypadek
+      - MS: czas O(n log n), typowy przypadek
+
+   b) Tablica rosnaca (posortowana):
+      - IS: NAJLEPSZY przypadek O(n) - petla while nie wykonuje sie ani razu,
+            kazdy element jest wiekszy od poprzedniego
+      - SS: bez zmian O(n^2) - i tak szuka maksimum w calym podzbiorze
+      - HS: O(n log n), budowanie kopca z posortowanej tablicy wymaga
+            wiecej zamian
+      - MS: O(n log n), scalanie jest proste ale rekursja i tak sie wykonuje
+
+   c) Tablica malejaca (posortowana odwrotnie):
+      - IS: NAJGORSZY przypadek O(n^2) - kazdy element musi byc przesuwany
+            na sam poczatek, petla while wykonuje maksymalna liczbe krokow
+      - SS: bez zmian O(n^2)
+      - HS: O(n log n), budowanie kopca jest szybkie bo tablica malejaca
+            juz spelnia warunek kopca typu max
+      - MS: O(n log n), bez istotnych roznic
+
+   d) Tablica stala (wszystkie elementy rowne):
+      - IS: przypadek O(n) - warunek A[i] > key nigdy nie jest spelniony,
+            petla while nie wykonuje sie
+      - SS: O(n^2) - nadal przeszukuje caly podzbior, chocia zamiany sa
+            trywialne (element z samym soba)
+      - HS: O(n log n), heapify konczy sie szybko bo elementy sa rowne
+      - MS: O(n log n), scalanie proste ale rekursja sie wykonuje
+
+   e) Tablica v-ksztaltna (malejaca potem rosnaca):
+      - IS: czas zblizony do przypadku sredniogo O(n^2), pierwsza polowa
+            wymaga przesuniec, druga polowa mniej
+      - SS: bez zmian O(n^2)
+      - HS: O(n log n), typowy przypadek
+      - MS: O(n log n), typowy przypadek
+
+   PODSUMOWANIE WPLYWU DANYCH WEJSCIOWYCH:
+   - Insertion Sort jest JEDYNYM algorytmem, ktory znaczaco korzysta
+     z czesciowego posortowania danych. Dla danych posortowanych lub stalych
+     dziala w czasie liniowym.
+   - Selection Sort jest calkowicie niewrazliwy na postac danych - zawsze
+     wykonuje te sama liczbe porownan.
+   - Heapsort i Merge Sort sa malo wrazliwe na postac danych - zawsze
+     dzialaja w O(n log n), z niewielkimi roznnicami stalych.
+
+
+================================================================================
+CZESC II - Quicksort z roznymi metodami wyboru pivota
+================================================================================
+
+1. ZLOZONOSC ALGORYTMU QUICKSORT
+---------------------------------
+
+   - Zlozonosc pesymistyczna: O(n^2)
+   - Zlozonosc optymistyczna: O(n log n)
+   - Zlozonosc srednia: O(n log n)
+   - Pamiec dodatkowa: O(log n) dla stosu rekursji/iteracji
+   - Algorytm niestabilny
+
+   Quicksort jest jednym z najszybszych algorytmow sortowania w praktyce,
+   mimo ze jego pesymistyczna zlozonosc to O(n^2). Kluczowym czynnikiem
+   wplywajacym na wydajnosc jest wybor pivota (elementu osiowego).
+
+
+2. WPLYW WYBORU PIVOTA NA DZIALANIE ALGORYTMU
+----------------------------------------------
+
+   a) Pivot skrajnie prawy:
+      - Dla tablicy A-ksztaltnej (rosnaca-malejaca) prawy element jest
+        jednym z najmniejszych, co prowadzi do bardzo nierownomiernego
+        podzialu tablicy. Jedna czesc ma 1 element, druga n-1 elementow.
+      - To jest przypadek NAJGORSZY - zlozonosc degraduje sie do O(n^2).
+      - Na wykresie widac wyraznie, ze czas rosnie znacznie szybciej
+        niz dla pozostalych pivotow - krzywa ma ksztalt paraboli.
+
+   b) Pivot srodkowy (co do polozenia):
+      - Dla tablicy A-ksztaltnej srodkowy element to maksimum tablicy.
+        Podzial jest rowniez nierownomierny, ale lepszy niz przy pivocie
+        prawym.
+      - W ogolnym przypadku pivot srodkowy daje dobre wyniki, bo rzadko
+        trafia na wartosci skrajne.
+      - Na wykresie czas rosnie wolniej, blizej O(n log n).
+
+   c) Pivot losowy:
+      - Losowy wybor pivota sprawia, ze prawdopodobienstwo trafienia na
+        najgorszy przypadek jest bardzo male. Statystycznie pivot bedzie
+        blisko mediany.
+      - To najlepsza strategia dla nieznanych danych wejsciowych - daje
+        oczekiwana zlozonosc O(n log n) niezaleznie od postaci tablicy.
+      - Na wykresie czas jest zblizony do pivota srodkowego, czasem
+        nieco lepszy, czasem nieco gorszy (z powodu losowosci).
+
+   NAJGORSZE PRZYPADKI DLA KAZDEGO PIVOTA:
+   - Pivot prawy:  tablica posortowana rosnaco lub malejaco -> O(n^2)
+   - Pivot srodkowy: specjalnie skonstruowane tablice (np. "median-of-3
+     killer") -> O(n^2), ale w praktyce bardzo rzadkie
+   - Pivot losowy: teoretycznie mozliwy O(n^2), ale prawdopodobienstwo
+     jest znikome - oczekiwany czas to zawsze O(n log n)
+
+   NAJLEPSZY PRZYPADEK (dla kazdego pivota):
+   - Gdy pivot zawsze trafia w mediane tablicy, podzial jest idealnie
+     rownomierny i algorytm dziala w O(n log n) z najmniejsza stala.
+
+   PODSUMOWANIE:
+   - Pivot losowy jest najbezpieczniejszym wyborem - eliminuje wplyw
+     postaci danych wejsciowych na wydajnosc.
+   - Pivot srodkowy jest dobrym kompromisem - szybki i deterministyczny.
+   - Pivot prawy/lewy jest NAJGORSZA strategia, bo latwo prowadzi do
+     zdegenerowanych podzialow dla wielu typowych postaci danych
+     (posortowane, czesciowo posortowane, A-ksztaltne, V-ksztaltne).
+
+
+================================================================================
+PODSUMOWANIE OGOLNE
+================================================================================
+
+1. Dla malych zbiorow danych (n < 1000) roznice miedzy algorytmami sa
+   pomijalne. Insertion Sort moze byc nawet najszybszy dzieki malej stalej
+   i prostocie implementacji.
+
+2. Dla duzych zbiorow danych algorytmy O(n log n) - Heapsort, Merge Sort,
+   Quicksort - sa wielokrotnie szybsze od algorytmow O(n^2).
+
+3. Jesli dane moga byc czesciowo posortowane, Insertion Sort jest dobrym
+   wyborem dla malych tablic (np. jako optymalizacja wewnatrz Quicksorta
+   dla malych podtablic).
+
+4. Jesli potrzebujemy gwarancji O(n log n) i nie mozemy sobie pozwolic na
+   dodatkowa pamiec - wybieramy Heapsort.
+
+5. Jesli potrzebujemy stabilnosci i gwarancji O(n log n) - wybieramy
+   Merge Sort (kosztem pamieci O(n)).
+
+6. Jesli zalezy nam na najszybszym sortowaniu w praktyce - wybieramy
+   Quicksort z losowym pivotem. Jest srednio najszybszy, ale nie daje
+   gwarancji O(n log n) w najgorszym przypadku.
